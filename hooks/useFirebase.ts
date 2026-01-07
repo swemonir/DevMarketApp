@@ -1,0 +1,209 @@
+import { useEffect, useState } from 'react';
+import type { MarketplaceItem } from '../types';
+
+interface App {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  platform: 'web' | 'mobile';
+  imageUrl?: string;
+  url?: string;
+}
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  verified: boolean;
+}
+
+interface UserProject {
+  id: string;
+  title: string;
+  description: string;
+  status: 'Draft' | 'Pending' | 'Approved' | 'Marketplace';
+  thumbnail?: string | null;
+  category: string;
+  platformType: 'web' | 'mobile';
+  submittedAt: string;
+}
+
+export const useFirebase = () => {
+  const [apps, setApps] = useState<App[]>([]);
+  const [marketplaceItems, setMarketplaceItems] = useState<MarketplaceItem[]>([]);
+  const [user, setUser] = useState<User | null>(null);
+  const [userProjects, setUserProjects] = useState<UserProject[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Mock user data
+    const mockUser: User = {
+      id: '1',
+      name: 'John Developer',
+      email: 'john@example.com',
+      verified: true,
+    };
+
+    // Mock data - replace with actual Firebase calls
+    const mockApps: App[] = [
+      {
+        id: '1',
+        title: 'AI Assistant',
+        description: 'Advanced AI-powered assistant for productivity',
+        category: 'AI Tools',
+        platform: 'web',
+        imageUrl: 'https://via.placeholder.com/150x150/3b82f6/ffffff?text=AI',
+      },
+      {
+        id: '2',
+        title: 'Task Manager',
+        description: 'Organize your tasks efficiently',
+        category: 'Productivity',
+        platform: 'mobile',
+        imageUrl: 'https://via.placeholder.com/150x150/10b981/ffffff?text=Task',
+      },
+      {
+        id: '3',
+        title: 'Social Hub',
+        description: 'Connect with friends and family',
+        category: 'Social',
+        platform: 'web',
+        imageUrl: 'https://via.placeholder.com/150x150/f59e0b/ffffff?text=Social',
+      },
+      {
+        id: '4',
+        title: 'Learning Platform',
+        description: 'Interactive educational content',
+        category: 'Education',
+        platform: 'mobile',
+        imageUrl: 'https://via.placeholder.com/150x150/8b5cf6/ffffff?text=Learn',
+      },
+    ];
+
+    const mockMarketplaceItems: MarketplaceItem[] = [
+      {
+        id: '1',
+        title: 'Premium Dashboard Template',
+        description: 'Beautiful admin dashboard template with charts and analytics',
+        price: 49,
+        category: 'Templates',
+        verified: true,
+        thumbnail: 'https://via.placeholder.com/150x150/3b82f6/ffffff?text=Template',
+        whatsappNumber: '1234567890',
+        contactEmail: 'devstudio@example.com',
+        seller: {
+          name: 'DevStudio',
+          rating: 4.8,
+        },
+        imageUrl: 'https://via.placeholder.com/150x150/3b82f6/ffffff?text=Template',
+      },
+      {
+        id: '2',
+        title: 'Mobile App Source Code',
+        description: 'Complete React Native app with authentication and real-time features',
+        price: 299,
+        category: 'Source Code',
+        verified: true,
+        thumbnail: 'https://via.placeholder.com/150x150/10b981/ffffff?text=Code',
+        whatsappNumber: '9876543210',
+        contactEmail: 'codemaster@example.com',
+        seller: {
+          name: 'CodeMaster',
+          rating: 4.9,
+        },
+        imageUrl: 'https://via.placeholder.com/150x150/10b981/ffffff?text=Code',
+      },
+      {
+        id: '3',
+        title: 'E-commerce Platform',
+        description: 'Full-stack e-commerce solution with payment integration',
+        price: 199,
+        category: 'Web Apps',
+        verified: false,
+        thumbnail: 'https://via.placeholder.com/150x150/f59e0b/ffffff?text=Ecom',
+        whatsappNumber: '5555555555',
+        contactEmail: 'webdev@example.com',
+        seller: {
+          name: 'WebDev Pro',
+          rating: 4.5,
+        },
+        imageUrl: 'https://via.placeholder.com/150x150/f59e0b/ffffff?text=Ecom',
+      },
+      {
+        id: '4',
+        title: 'UI Component Library',
+        description: '50+ premium React components with TypeScript support',
+        price: 89,
+        category: 'Mobile Apps',
+        verified: true,
+        thumbnail: 'https://via.placeholder.com/150x150/8b5cf6/ffffff?text=UI',
+        whatsappNumber: '1111111111',
+        contactEmail: 'uiexpert@example.com',
+        seller: {
+          name: 'UI Expert',
+          rating: 4.7,
+        },
+        imageUrl: 'https://via.placeholder.com/150x150/8b5cf6/ffffff?text=UI',
+      },
+    ];
+
+    const mockUserProjects: UserProject[] = [
+      {
+        id: '1',
+        title: 'AI Task Manager',
+        description: 'Smart task management with AI-powered prioritization and automation',
+        status: 'Approved',
+        thumbnail: 'https://via.placeholder.com/150x150/10b981/ffffff?text=TaskAI',
+        category: 'Productivity',
+        platformType: 'web',
+        submittedAt: '2024-01-15',
+      },
+      {
+        id: '2',
+        title: 'Social Media Dashboard',
+        description: 'Comprehensive dashboard for managing multiple social media accounts',
+        status: 'Pending',
+        thumbnail: 'https://via.placeholder.com/150x150/3b82f6/ffffff?text=Social',
+        category: 'Social',
+        platformType: 'web',
+        submittedAt: '2024-01-18',
+      },
+      {
+        id: '3',
+        title: 'Mobile Game Engine',
+        description: 'Lightweight game engine for 2D mobile games with physics simulation',
+        status: 'Marketplace',
+        thumbnail: 'https://via.placeholder.com/150x150/f59e0b/ffffff?text=Game',
+        category: 'Developer Tools',
+        platformType: 'mobile',
+        submittedAt: '2024-01-10',
+      },
+      {
+        id: '4',
+        title: 'E-commerce Template',
+        description: 'Modern e-commerce template with payment integration and inventory management',
+        status: 'Draft',
+        thumbnail: 'https://via.placeholder.com/150x150/8b5cf6/ffffff?text=Ecom',
+        category: 'Templates',
+        platformType: 'web',
+        submittedAt: '2024-01-20',
+      },
+    ];
+
+    setTimeout(() => {
+      setApps(mockApps);
+      setMarketplaceItems(mockMarketplaceItems);
+      setUser(mockUser);
+      setUserProjects(mockUserProjects);
+      setLoading(false);
+    }, 1000);
+  }, []);
+
+  const logout = () => {
+    setUser(null);
+    setUserProjects([]);
+  };
+
+  return { apps, marketplaceItems, user, userProjects, logout, loading };
+};
