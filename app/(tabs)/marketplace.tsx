@@ -1,3 +1,5 @@
+import Feather from '@expo/vector-icons/Feather';
+import Octicons from '@expo/vector-icons/Octicons';
 import React, { useState } from 'react';
 import {
   Dimensions,
@@ -11,13 +13,9 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BuyRequestModal from '../../components/BuyRequestModal';
 import MarketplaceCard from '../../components/MarketplaceCard';
+import PullToRefreshWrapper from '../../components/PullToRefreshWrapper';
 import { useFirebase } from '../../hooks/useFirebase';
 import type { MarketplaceItem } from '../../types';
-
-// Icon components
-const FilterIcon = () => <Text style={{ fontSize: 20 }}>🔧</Text>;
-const SlidersIcon = () => <Text style={{ fontSize: 20 }}>⚙️</Text>;
-const DollarIcon = () => <Text style={{ fontSize: 16 }}>💵</Text>;
 
 const { width } = Dimensions.get('window');
 
@@ -29,8 +27,8 @@ export default function MarketplaceScreen() {
   const [verifiedOnly, setVerifiedOnly] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [selectedItem, setSelectedItem] = useState<MarketplaceItem | null>(null);
-  
-  const { marketplaceItems, loading } = useFirebase();
+
+  const { marketplaceItems, loading, refresh } = useFirebase();
 
   const filteredItems = marketplaceItems.filter(item => {
     const matchesPrice = item.price >= priceRange[0] && item.price <= priceRange[1];
@@ -44,9 +42,9 @@ export default function MarketplaceScreen() {
   };
 
   const renderMarketplaceCard = ({ item }: { item: MarketplaceItem }) => (
-    <MarketplaceCard 
-      item={item} 
-      onBuyRequest={() => setSelectedItem(item)} 
+    <MarketplaceCard
+      item={item}
+      onBuyRequest={() => setSelectedItem(item)}
     />
   );
 
@@ -73,7 +71,7 @@ export default function MarketplaceScreen() {
         justifyContent: 'center',
         marginBottom: 16,
       }}>
-        <FilterIcon />
+        <Octicons name="filter" size={32} color="#94a3b8" />
       </View>
       <Text style={{
         fontSize: 20,
@@ -95,11 +93,12 @@ export default function MarketplaceScreen() {
       flex: 1,
       backgroundColor: '#020617',
     }}>
-      <ScrollView 
+      <PullToRefreshWrapper
         style={{
           flex: 1,
         }}
-        showsVerticalScrollIndicator={false}
+        onRefresh={refresh}
+        refreshing={loading}
         stickyHeaderIndices={[1]}
       >
         {/* Header */}
@@ -121,20 +120,21 @@ export default function MarketplaceScreen() {
               fontWeight: 'bold',
               color: '#fff',
             }}>Marketplace</Text>
-            <TouchableOpacity 
-              onPress={() => setShowFilters(!showFilters)} 
+            <TouchableOpacity
+              onPress={() => setShowFilters(!showFilters)}
               style={{
                 padding: 8,
                 borderRadius: 12,
+                backgroundColor: 'rgba(30, 41, 59, 0.5)',
               }}
             >
-              <SlidersIcon />
+              <Octicons name="sliders" size={20} color="white" />
             </TouchableOpacity>
           </View>
 
           {/* Category Pills */}
-          <ScrollView 
-            horizontal 
+          <ScrollView
+            horizontal
             showsHorizontalScrollIndicator={false}
             style={{
               marginBottom: 8,
@@ -227,7 +227,7 @@ export default function MarketplaceScreen() {
               }}>
                 Verified Only
               </Text>
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress={() => setVerifiedOnly(!verifiedOnly)}
                 style={{
                   width: 48,
@@ -270,7 +270,7 @@ export default function MarketplaceScreen() {
               flexDirection: 'row',
               alignItems: 'center',
             }}>
-              <DollarIcon />
+              <Feather name="dollar-sign" size={16} color="#94a3b8" />
               <Text style={{
                 fontSize: 14,
                 color: '#94a3b8',
@@ -316,13 +316,13 @@ export default function MarketplaceScreen() {
             />
           )}
         </View>
-      </ScrollView>
+      </PullToRefreshWrapper>
 
       {/* Buy Request Modal */}
       {selectedItem && (
-        <BuyRequestModal 
-          item={selectedItem} 
-          onClose={() => setSelectedItem(null)} 
+        <BuyRequestModal
+          item={selectedItem}
+          onClose={() => setSelectedItem(null)}
         />
       )}
     </SafeAreaView>

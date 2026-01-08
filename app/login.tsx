@@ -1,4 +1,6 @@
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
@@ -175,8 +177,8 @@ export default function AuthScreen() {
             )}
 
             <View style={styles.inputContainer}>
-              <View style={styles.inputWrapper}>
-                <MailIcon />
+              <View style={[styles.inputWrapper, { paddingLeft: 16 }]}>
+                <MaterialCommunityIcons name="email-outline" size={24} color="#94a3b8" />
                 <TextInput
                   style={styles.input}
                   placeholder="Email"
@@ -231,17 +233,39 @@ export default function AuthScreen() {
             )}
 
             <TouchableOpacity
-              style={[styles.submitButton, isLoading && styles.buttonDisabled]}
               onPress={handleSubmit}
               disabled={isLoading}
             >
-              {isLoading ? (
-                <ActivityIndicator color="#fff" />
-              ) : (
-                <Text style={styles.submitButtonText}>
-                  {isLogin ? 'Sign In' : 'Create Account'}
-                </Text>
-              )}
+              <LinearGradient
+                colors={['#3b82f6', '#4f46e5']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={[
+                  styles.submitButton, 
+                  isLoading && styles.buttonDisabled,
+                  {
+                    paddingVertical: 10,
+                    paddingHorizontal: 24,
+                    borderRadius: 12,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    shadowColor: '#3b82f6',
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 10,
+                    elevation: 5,
+                  }
+                ]}
+              >
+
+                {isLoading ? (
+                  <ActivityIndicator color="#fff" />
+                ) : (
+                  <Text style={styles.submitButtonText}>
+                    {isLogin ? 'Sign In' : 'Create Account'}
+                  </Text>
+                )}
+              </LinearGradient>
             </TouchableOpacity>
 
             <View style={styles.switchContainer}>

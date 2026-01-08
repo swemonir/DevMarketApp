@@ -47,13 +47,13 @@ export default function SplashScreen() {
 
         // Check authentication and redirect after 2.5 seconds
         const timer = setTimeout(() => {
-            if (!loading) {
-                if (user) {
-                    router.replace('/(tabs)' as any);
-                } else {
+            // if (!loading) {
+            //     if (user) {
+            //         router.replace('/(tabs)' as any);
+            //     } else {
                     router.replace('/login' as any);
-                }
-            }
+            //     }
+            // }
         }, 2500);
 
         return () => clearTimeout(timer);

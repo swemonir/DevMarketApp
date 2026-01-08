@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-    Dimensions,
-    Image,
-    Linking,
-    Modal,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  Image,
+  Linking,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import type { MarketplaceItem } from '../types';
 
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
   modal: {
     width: '100%',
     maxWidth: width > 768 ? 448 : width,
-    backgroundColor: '#1e293b',
+    backgroundColor: '#0f172a',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     borderRadius: width > 768 ? 24 : 0,

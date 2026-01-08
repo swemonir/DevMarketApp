@@ -1,24 +1,26 @@
+import Feather from '@expo/vector-icons/Feather';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
 import {
-    Alert,
-    Dimensions,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Switch,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Icon components
-const CheckIcon = () => <Text style={{ fontSize: 20 }}>✓</Text>;
-const ChevronLeftIcon = () => <Text style={{ fontSize: 20 }}>←</Text>;
-const ChevronRightIcon = () => <Text style={{ fontSize: 20 }}>→</Text>;
-const UploadIcon = () => <Text style={{ fontSize: 20 }}>📤</Text>;
+const CheckIcon = () => <Feather name="check" size={20} color="white" />;
+const ChevronLeftIcon = () => <Feather name="chevron-left" size={20} color="white" />;
+const ChevronRightIcon = () => <Feather name="chevron-right" size={20} color="white" />;
+const UploadIcon = () => <Feather name="upload" size={20} color="white" />;
 
 const { width, height } = Dimensions.get('window');
 
@@ -163,7 +165,7 @@ export default function SubmitScreen() {
                 styles.progressCircleText,
                 index <= currentStep && styles.progressCircleTextActive
               ]}>
-                {index < currentStep ? '✓' : index + 1}
+                {index < currentStep ? <Feather name="check"  size={14} color="white" /> : index + 1}
               </Text>
             </View>
             {index < steps.length - 1 && (
@@ -338,7 +340,7 @@ export default function SubmitScreen() {
             </View>
           ) : (
             <View style={styles.uploadPlaceholder}>
-              <UploadIcon />
+              <Feather name="upload" size={16} color="#64748b" />
               <Text style={styles.uploadText}>Upload Thumbnail</Text>
               <Text style={styles.uploadSubtext}>PNG, JPG up to 5MB</Text>
             </View>
@@ -359,8 +361,8 @@ export default function SubmitScreen() {
               {formData.screenshots[index] ? (
                 <Image source={{ uri: formData.screenshots[index] }} style={styles.screenshotImage} />
               ) : (
-                <View style={styles.screenshotPlaceholder}>
-                  <UploadIcon />
+                <View>
+                  <Feather name="upload" size={16} color="#64748b" />
                 </View>
               )}
             </TouchableOpacity>
@@ -524,14 +526,14 @@ export default function SubmitScreen() {
               currentStep === 0 && styles.navButtonDisabled
             ]}
           >
-            <ChevronLeftIcon />
+            <MaterialIcons name="arrow-back-ios-new" size={16} color="white" />
             <Text style={styles.navButtonText}>Back</Text>
           </TouchableOpacity>
 
           {currentStep < steps.length - 1 ? (
             <TouchableOpacity onPress={handleNext} style={[styles.navButton, styles.nextButton]}>
               <Text style={styles.navButtonText}>Next</Text>
-              <ChevronRightIcon />
+              <MaterialIcons name="arrow-forward-ios" size={16} color="white" />
             </TouchableOpacity>
           ) : (
             <TouchableOpacity onPress={handleSubmit} style={[styles.navButton, styles.submitButton]}>
@@ -554,7 +556,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: 'rgba(15, 23, 42, 0.8)',
     paddingHorizontal: 16,
     paddingTop: 24,
     paddingBottom: 16,
@@ -626,6 +627,7 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     gap: 16,
+    width: '100%',
   },
   formGroup: {
     gap: 8,
@@ -745,8 +747,9 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   screenshotItem: {
-    width: (width - 48) / 2 - 6,
-    aspectRatio: 16 / 9,
+    width: (width - 40) / 2 - 6,
+    // aspectRatio: 16 / 9,
+    height: 100,
     backgroundColor: 'rgba(30, 41, 59, 0.3)',
     borderWidth: 2,
     borderColor: 'rgba(51, 65, 85, 0.5)',
@@ -767,6 +770,7 @@ const styles = StyleSheet.create({
   marketplaceCard: {
     backgroundColor: 'rgba(30, 41, 59, 0.3)',
     borderRadius: 16,
+    width: '100%',
     padding: 24,
     borderWidth: 1,
     borderColor: 'rgba(51, 65, 85, 0.3)',
@@ -774,8 +778,10 @@ const styles = StyleSheet.create({
   marketplaceHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginBottom: 16,
+    paddingHorizontal: 16,
+    width: "100%"
   },
   marketplaceTitle: {
     fontSize: 18,
@@ -904,7 +910,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#3b82f6',
   },
   submitButton: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#1fce67',
   },
   navButtonText: {
     color: '#fff',

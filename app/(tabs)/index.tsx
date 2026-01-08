@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppCard from '../../components/AppCard';
+import PullToRefreshWrapper from '../../components/PullToRefreshWrapper';
 import { useFirebase } from '../../hooks/useFirebase';
 
 // Icon components
@@ -28,7 +29,7 @@ export default function DiscoverScreen() {
   const [selectedProfession, setSelectedProfession] = useState('Developer');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedPlatform, setSelectedPlatform] = useState('Web Apps');
-  const { apps, loading } = useFirebase();
+  const { apps, loading, refresh } = useFirebase();
 
   const filteredApps = apps.filter(app => {
     const matchesSearch =
@@ -135,12 +136,12 @@ export default function DiscoverScreen() {
     <SafeAreaView style={{
       flex: 1,
     }}>
-      <ScrollView
+      <PullToRefreshWrapper
         style={{
           flex: 1,
-          backgroundColor: '#020617',
         }}
-        showsVerticalScrollIndicator={false}
+        onRefresh={refresh}
+        refreshing={loading}
         stickyHeaderIndices={[1]}
       >
         {/* Header */}
@@ -368,7 +369,7 @@ export default function DiscoverScreen() {
             />
           )}
         </View>
-      </ScrollView>
+      </PullToRefreshWrapper>
     </SafeAreaView>
   );
 }

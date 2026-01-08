@@ -1,15 +1,19 @@
+import Feather from '@expo/vector-icons/Feather';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
 import {
-    Alert,
-    FlatList,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  FlatList,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import PullToRefreshWrapper from '../../components/PullToRefreshWrapper';
 import { useFirebase } from '../../hooks/useFirebase';
 
 // Icon components
@@ -26,7 +30,7 @@ const tabs = ['Draft', 'Pending', 'Approved', 'Marketplace'];
 
 export default function ProfileScreen() {
   const [activeTab, setActiveTab] = useState('Approved');
-  const { user, logout, userProjects } = useFirebase();
+  const { user, logout, userProjects, refresh } = useFirebase();
 
   const filteredProjects = userProjects.filter(
     project => project.status.toLowerCase() === activeTab.toLowerCase()
@@ -84,7 +88,7 @@ export default function ProfileScreen() {
 
   const renderProjectItem = ({ item }: { item: any }) => {
     const statusColors = getStatusColor(item.status);
-    
+
     return (
       <View style={styles.projectCard}>
         <View style={styles.projectHeader}>
@@ -97,7 +101,7 @@ export default function ProfileScreen() {
               </View>
             )}
           </View>
-          
+
           <View style={styles.projectContent}>
             <Text style={styles.projectTitle} numberOfLines={1}>
               {item.title}
@@ -105,7 +109,7 @@ export default function ProfileScreen() {
             <Text style={styles.projectDescription} numberOfLines={2}>
               {item.description}
             </Text>
-            
+
             <View style={styles.projectFooter}>
               <View style={[styles.statusBadge, statusColors]}>
                 {getStatusIcon(item.status)}
@@ -113,7 +117,7 @@ export default function ProfileScreen() {
                   {item.status}
                 </Text>
               </View>
-              
+
               {item.status === 'Draft' && (
                 <TouchableOpacity style={styles.editButton}>
                   <Text style={styles.editButtonText}>Edit</Text>
@@ -142,35 +146,56 @@ export default function ProfileScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <PullToRefreshWrapper
+        style={styles.scrollView}
+        onRefresh={refresh}
+        refreshing={false}
+      >
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Profile</Text>
-          
+
           {/* User Card */}
           <View style={styles.userCard}>
             <View style={styles.userCardHeader}>
-              <View style={styles.avatar}>
-                <UserIcon />
-              </View>
-              
+
+              <LinearGradient
+                colors={['#3b82f6', '#4f46e5']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={{
+                  padding: 10,
+                  borderRadius: 100,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  shadowColor: '#3b82f6',
+                  shadowOffset: { width: 0, height: 4 },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 10,
+                  elevation: 5,
+                }}
+              >
+                <Feather name="user" size={32} color="white" />
+              </LinearGradient>
+
+
               <View style={styles.userInfo}>
                 <View style={styles.userNameRow}>
                   <Text style={styles.userName} numberOfLines={1}>
                     {user?.name}
                   </Text>
                   {user?.verified && (
-                    <CheckCircleIcon />
+                    <Feather name="check-circle" size={24} color="#5592df" />
                   )}
                 </View>
-                
+
                 <View style={styles.userEmailRow}>
                   <MailIcon />
                   <Text style={styles.userEmail} numberOfLines={1}>
                     {user?.email}
                   </Text>
                 </View>
-                
+
                 {/* Stats */}
                 <View style={styles.statsRow}>
                   <View style={styles.statItem}>
@@ -199,8 +224,8 @@ export default function ProfileScreen() {
 
         {/* Tabs */}
         <View style={styles.tabsContainer}>
-          <ScrollView 
-            horizontal 
+          <ScrollView
+            horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.tabsContent}
           >
@@ -242,11 +267,11 @@ export default function ProfileScreen() {
         {/* Actions */}
         <View style={styles.actionsContainer}>
           <TouchableOpacity style={styles.editProfileButton}>
-            <EditIcon />
+            <Feather name="edit" size={24} color="white" />
             <Text style={styles.editProfileText}>Edit Profile</Text>
           </TouchableOpacity>
-          
-          <TouchableOpacity 
+
+          <TouchableOpacity
             onPress={() => {
               Alert.alert(
                 'Logout',
@@ -259,11 +284,11 @@ export default function ProfileScreen() {
             }}
             style={styles.logoutButton}
           >
-            <LogOutIcon />
+            <MaterialCommunityIcons name="logout" size={24} color="#ef4444" />
             <Text style={styles.logoutText}>Logout</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </PullToRefreshWrapper>
     </SafeAreaView>
   );
 }
@@ -277,7 +302,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: 'rgba(15, 23, 42, 0.8)',
     paddingHorizontal: 16,
     paddingTop: 24,
     paddingBottom: 24,
@@ -300,6 +324,8 @@ const styles = StyleSheet.create({
   userCardHeader: {
     flexDirection: 'row',
     alignItems: 'flex-start',
+    justifyContent: "space-between",
+    gap: 16
   },
   avatar: {
     width: 64,
