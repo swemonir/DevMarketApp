@@ -53,7 +53,7 @@ export const useFirebase = () => {
         description: 'Advanced AI-powered assistant for productivity',
         category: 'AI Tools',
         platform: 'web',
-        imageUrl: 'https://via.placeholder.com/150x150/3b82f6/ffffff?text=AI',
+        imageUrl: 'https://plus.unsplash.com/premium_photo-1725985758331-e1b46919d8cf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       },
       {
         id: '2',
@@ -61,7 +61,7 @@ export const useFirebase = () => {
         description: 'Organize your tasks efficiently',
         category: 'Productivity',
         platform: 'mobile',
-        imageUrl: 'https://via.placeholder.com/150x150/10b981/ffffff?text=Task',
+        imageUrl: 'https://images.unsplash.com/photo-1579869847557-1f67382cc158?q=80&w=1334&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       },
       {
         id: '3',
@@ -69,7 +69,7 @@ export const useFirebase = () => {
         description: 'Connect with friends and family',
         category: 'Social',
         platform: 'web',
-        imageUrl: 'https://via.placeholder.com/150x150/f59e0b/ffffff?text=Social',
+        imageUrl: 'https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       },
       {
         id: '4',
@@ -77,7 +77,7 @@ export const useFirebase = () => {
         description: 'Interactive educational content',
         category: 'Education',
         platform: 'mobile',
-        imageUrl: 'https://via.placeholder.com/150x150/8b5cf6/ffffff?text=Learn',
+        imageUrl: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       },
     ];
 

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    FlatList,
-    ScrollView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+  Dimensions,
+  FlatList,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BuyRequestModal from '../../components/BuyRequestModal';
@@ -93,7 +93,7 @@ export default function MarketplaceScreen() {
   return (
     <SafeAreaView style={{
       flex: 1,
-      backgroundColor: '#0f172a',
+      backgroundColor: '#020617',
     }}>
       <ScrollView 
         style={{
@@ -104,7 +104,6 @@ export default function MarketplaceScreen() {
       >
         {/* Header */}
         <View style={{
-          backgroundColor: 'rgba(15, 23, 42, 0.8)',
           paddingHorizontal: 16,
           paddingTop: 24,
           paddingBottom: 16,
@@ -126,7 +125,6 @@ export default function MarketplaceScreen() {
               onPress={() => setShowFilters(!showFilters)} 
               style={{
                 padding: 8,
-                backgroundColor: 'rgba(30, 41, 59, 0.5)',
                 borderRadius: 12,
               }}
             >
@@ -253,7 +251,7 @@ export default function MarketplaceScreen() {
 
         {/* Stats Bar */}
         <View style={{
-          backgroundColor: 'rgba(15, 23, 42, 0.3)',
+          backgroundColor: '#080d1f',
           paddingHorizontal: 16,
           paddingVertical: 12,
         }}>

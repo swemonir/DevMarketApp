@@ -269,7 +269,7 @@ export default function AuthScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0f172a',
+    backgroundColor: '#020617',
   },
   scrollContent: {
     flexGrow: 1,
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   googleButtonText: {
-    color: '#0f172a',
+    color: '#020617',
     fontSize: 16,
     fontWeight: '600',
     marginLeft: 12,

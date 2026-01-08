@@ -1,12 +1,13 @@
+import Feather from '@expo/vector-icons/Feather';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    FlatList,
-    ScrollView,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View
+  Dimensions,
+  FlatList,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppCard from '../../components/AppCard';
@@ -30,8 +31,8 @@ export default function DiscoverScreen() {
   const { apps, loading } = useFirebase();
 
   const filteredApps = apps.filter(app => {
-    const matchesSearch = 
-      app.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    const matchesSearch =
+      app.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       app.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesPlatform = selectedPlatform === 'Web Apps' ? app.platform === 'web' : app.platform === 'mobile';
     const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(app.category);
@@ -39,9 +40,9 @@ export default function DiscoverScreen() {
   });
 
   const toggleCategory = (category: string) => {
-    setSelectedCategories(prev => 
-      prev.includes(category) 
-        ? prev.filter(c => c !== category) 
+    setSelectedCategories(prev =>
+      prev.includes(category)
+        ? prev.filter(c => c !== category)
         : [...prev, category]
     );
   };
@@ -133,11 +134,11 @@ export default function DiscoverScreen() {
   return (
     <SafeAreaView style={{
       flex: 1,
-      backgroundColor: '#0f172a',
     }}>
-      <ScrollView 
+      <ScrollView
         style={{
           flex: 1,
+          backgroundColor: '#020617',
         }}
         showsVerticalScrollIndicator={false}
         stickyHeaderIndices={[1]}
@@ -157,21 +158,21 @@ export default function DiscoverScreen() {
 
         {/* Search Bar */}
         <View style={{
-          backgroundColor: 'rgba(15, 23, 42, 0.8)',
           paddingHorizontal: 16,
-          paddingBottom: 16,
-          borderBottomWidth: 1,
+          zIndex: 99,
+          backgroundColor: '#020617',
+          borderBottomWidth: 0.2,
           borderBottomColor: 'rgba(51, 65, 85, 0.3)',
         }}>
           <View style={{
             flexDirection: 'row',
+            marginBottom: 12,
             alignItems: 'center',
-            backgroundColor: 'rgba(30, 41, 59, 0.5)',
-            borderRadius: 12,
-            paddingHorizontal: 16,
-            paddingVertical: 12,
-            marginBottom: 16,
+            backgroundColor: '#101829',
+            borderRadius: 10,
             borderWidth: 1,
+            paddingHorizontal: 10,
+            paddingVertical: 2,
             borderColor: 'rgba(51, 65, 85, 0.5)',
           }}>
             <SearchIcon />
@@ -189,8 +190,8 @@ export default function DiscoverScreen() {
           </View>
 
           {/* Profession Filter */}
-          <ScrollView 
-            horizontal 
+          <ScrollView
+            horizontal
             showsHorizontalScrollIndicator={false}
             style={{
               marginBottom: 8,
@@ -250,7 +251,7 @@ export default function DiscoverScreen() {
               color: '#94a3b8',
               textTransform: 'uppercase',
             }}>Categories</Text>
-            <FilterIcon />
+            <Feather name="filter" size={16} color="#94a3b8" />
           </View>
           <View style={{
             flexDirection: 'row',
@@ -299,8 +300,8 @@ export default function DiscoverScreen() {
           marginBottom: 16,
         }}>
           <View style={{
-            backgroundColor: 'rgba(30, 41, 59, 0.3)',
-            borderRadius: 12,
+            backgroundColor: '#0d1426',
+            borderRadius: 8,
             padding: 4,
             flexDirection: 'row',
           }}>
@@ -316,7 +317,7 @@ export default function DiscoverScreen() {
                     alignItems: 'center',
                   },
                   selectedPlatform === platform && {
-                    backgroundColor: 'rgba(51, 65, 85, 0.8)',
+                    backgroundColor: '#334155',
                   }
                 ]}
               >
